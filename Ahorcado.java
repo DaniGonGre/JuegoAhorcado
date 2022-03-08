@@ -5,16 +5,12 @@ import javax.swing.JOptionPane;
 
 public class Ahorcado {
   
-    public static void primeraParte() {
+    public static void partida() {
 
         List<String> palabras = Arrays.asList("camion", "toro", "perro", "hawaii");
 
         int i = 0;
 
-//        while(i<palabras.size()){
-//            System.out.println(palabras.get(i));
-//            i++;
-//        }
         Random rand = new Random();
         String palabraJuego = palabras.get(rand.nextInt(palabras.size()));
 
@@ -31,13 +27,13 @@ public class Ahorcado {
                 JOptionPane.showConfirmDialog(null, "Pediste");
                 break;
             }
-            impresionPalabras(palabraJuego, jugadores);
+            verPalabras(palabraJuego, jugadores);
             
             if(!jugando(palabraJuego, jugadores)){
                 intentos++;
             }
             
-            if(impresionPalabras(palabraJuego, jugadores)){
+            if(verPalabras(palabraJuego, jugadores)){
                 JOptionPane.showMessageDialog(null, "Ganaste");
             }
             String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
@@ -60,7 +56,7 @@ public class Ahorcado {
         return palabraJuego.contains(letra);
     }
         
-    private static boolean impresionPalabras(String palabraJuego, List<Character> jugadores) {
+    private static boolean verPalabras(String palabraJuego, List<Character> jugadores) {
         String concatena = "";
         int correctas = 0;
 
@@ -69,7 +65,7 @@ public class Ahorcado {
                 concatena = concatena + palabraJuego.charAt(i);
                 correctas++;
             } else {
-                concatena = concatena + "-";
+                concatena = concatena + " - ";
             }
         }
         JOptionPane.showConfirmDialog(null, concatena);
