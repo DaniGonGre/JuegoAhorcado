@@ -1,0 +1,78 @@
+package juegoahorcado;
+
+import java.util.*;
+import javax.swing.JOptionPane;
+
+public class Ahorcado {
+  
+    public static void primeraParte() {
+
+        List<String> palabras = Arrays.asList("camion", "toro", "perro", "hawaii");
+
+        int i = 0;
+
+//        while(i<palabras.size()){
+//            System.out.println(palabras.get(i));
+//            i++;
+//        }
+        Random rand = new Random();
+        String palabraJuego = palabras.get(rand.nextInt(palabras.size()));
+
+        System.out.println(palabraJuego);
+
+        List<Character> jugadores = new ArrayList<>();
+
+        System.out.println();
+
+        int intentos = 0;
+
+        while (true) {
+            if (intentos >= 6) {
+                JOptionPane.showConfirmDialog(null, "Pediste");
+                break;
+            }
+            impresionPalabras(palabraJuego, jugadores);
+            
+            if(!jugando(palabraJuego, jugadores)){
+                intentos++;
+            }
+            
+            if(impresionPalabras(palabraJuego, jugadores)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+            }
+            String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
+            
+            if(palabraJuego.equals(tmp)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "No es correcto, continue");
+            }
+            
+        }
+    }
+
+    private static boolean jugando(String palabraJuego, List<Character> jugadores) {
+
+        String letra = JOptionPane.showInputDialog("Introduce unha letra: ");
+        jugadores.add(letra.charAt(0));
+
+        return palabraJuego.contains(letra);
+    }
+        
+    private static boolean impresionPalabras(String palabraJuego, List<Character> jugadores) {
+        String concatena = "";
+        int correctas = 0;
+
+        for (int i = 0; i < palabraJuego.length(); i++) {
+            if (jugadores.contains(palabraJuego.charAt(i))) {
+                concatena = concatena + palabraJuego.charAt(i);
+                correctas++;
+            } else {
+                concatena = concatena + "-";
+            }
+        }
+        JOptionPane.showConfirmDialog(null, concatena);
+        return (palabraJuego.length() == correctas);
+    }
+}
