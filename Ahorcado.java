@@ -4,10 +4,10 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Ahorcado {
-  
+
     public static void partida() {
 
-        List<String> palabras = Arrays.asList("camion", "toro", "perro", "hawaii");
+        List<String> palabras = Arrays.asList("camion", "esternocleidomastoideo", "perro", "hawaii");
 
         int i = 0;
 
@@ -23,28 +23,31 @@ public class Ahorcado {
         int intentos = 0;
 
         while (true) {
-            if (intentos >= 6) {
-                JOptionPane.showConfirmDialog(null, "Pediste");
+            if (intentos >= 5) {
+                JOptionPane.showMessageDialog(null, "No te quedan más intentos.");
                 break;
             }
-            verPalabras(palabraJuego, jugadores);
-            
-            if(!jugando(palabraJuego, jugadores)){
+
+            if (!jugando(palabraJuego, jugadores)) {
                 intentos++;
+                JOptionPane.showMessageDialog(null, "Esta letra no está en la palabra. Te quedan " + (6-intentos) + " intentos");
+            }
+
+            if (verPalabras(palabraJuego, jugadores)) {
+                JOptionPane.showMessageDialog(null, "Has acertado la palabra!");
             }
             
-            if(verPalabras(palabraJuego, jugadores)){
-                JOptionPane.showMessageDialog(null, "Ganaste");
-            }
+            
             String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
             
-            if(palabraJuego.equals(tmp)){
+            if (palabraJuego.equals(tmp)) {
                 JOptionPane.showMessageDialog(null, "Ganaste");
                 break;
             } else {
-                JOptionPane.showMessageDialog(null, "No es correcto, continue");
+                intentos++;
+                JOptionPane.showMessageDialog(null, "La palabra no es correcta. Te quedan " + (6-intentos) + " intentos.");
             }
-            
+
         }
     }
 
@@ -55,7 +58,7 @@ public class Ahorcado {
 
         return palabraJuego.contains(letra);
     }
-        
+
     private static boolean verPalabras(String palabraJuego, List<Character> jugadores) {
         String concatena = "";
         int correctas = 0;
