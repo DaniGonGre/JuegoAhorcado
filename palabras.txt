@@ -5,6 +5,14 @@ paraguas
 mesa
 paralisis
 encefalo
+diagnostico
+herencia
+toxico
+nervios
+ortopedico
+miembro
+infantil
+atrofia
 
 
 
