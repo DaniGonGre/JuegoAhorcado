@@ -1,130 +1,76 @@
-package juegoahorcado;
+package juegoahorcadoprueba;
 
-import com.dani.lecturaPalabras.Fichero;
-import static java.lang.String.valueOf;
 import java.util.*;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
-import static javax.swing.JOptionPane.YES_NO_OPTION;
-public class Ahorcado {
 
-    public static List<String> partida() {
+public class Ahorcado {
+  
+    public static void partida() {
 
         List<String> palabras = new ArrayList<>();
-        Fichero.crearPalabra(palabras);
+        Ficherolectura.crearPalabra(palabras);
+        int i = 0;
 
         Random rand = new Random();
         String palabraJuego = palabras.get(rand.nextInt(palabras.size()));
 
         System.out.println(palabraJuego);
 
+        List<Character> jugadores = new ArrayList<>();
+
+        System.out.println();
+
         int intentos = 0;
 
         while (true) {
-            if (intentos >= 4) {
-                JOptionPane.showMessageDialog(null, "Perdiste");
+            if (intentos >= 6) {
+                JOptionPane.showConfirmDialog(null, "Has acabado todos tus intentos.");
                 break;
             }
-
-            if (!jugando(palabraJuego, palabras)) {
+            verPalabras(palabraJuego, jugadores);
+            
+            if(!jugando(palabraJuego, jugadores)){
                 intentos++;
+                JOptionPane.showMessageDialog(null, "Esta letra no está en la palabra. Te quedan " + (6-intentos) + " intentos");
+
             }
-
-
-            if (verPalabras(palabraJuego, palabras)) {
+            
+            if(verPalabras(palabraJuego, jugadores)){
                 JOptionPane.showMessageDialog(null, "Ganaste");
             }
-
-
-            JOptionPane.showMessageDialog(null, "No es correcto, continue");
-
-        }
-                Ahorcado.jugando(palabraJuego, palabras);
-
-        return palabras;
-        
-    }
-
-
-    private static void averiguar(String palabraJuego, List<String> palabras) {
-        int op = JOptionPane.showOptionDialog(null, "¿Quieres introducir la palabra?", "Averiguar", YES_NO_OPTION, QUESTION_MESSAGE, null, new Object[]{"Si", "No"}, null);
-
-
-        switch (op) {
-
-            case 0:
-                String palabra = JOptionPane.showInputDialog("Introduce la palabra");
-
-
-                if (palabraJuego.equals(palabra)) {
-                    JOptionPane.showMessageDialog(null, "Ganaste");
-
-                    op=0;
-
-                    op = Integer.parseInt(JOptionPane.showInputDialog(" **** MENU ****" +
-                            "\n1 --> Seguir jugando" + "\n2 --> Sair da partida"));
-
-                    if(op==1){
-                        Ahorcado.partida();
-                    }
-
-                    System.exit(op);
-
-                } else {
-                    //for(int i = 5; true; i--) {
-                    //JOptionPane.showMessageDialog(null, "No es correcto, te quedan " +i+ " intentos");
-                    //i--;
-
-                    break;
-                }
-
-
-            case 1:
-                Ahorcado.jugando(palabraJuego, palabras);
-
-
+            String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
+            
+            if(palabraJuego.equals(tmp)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
                 break;
+            } else {
+                JOptionPane.showMessageDialog(null, "No es correcto, continue");
+            }
+            
         }
-
     }
 
-
-
-
-
-
-
-    private static boolean jugando(String palabraJuego, List<String> palabras) {
+    private static boolean jugando(String palabraJuego, List<Character> jugadores) {
 
         String letra = JOptionPane.showInputDialog("Introduce unha letra: ");
-        palabras.add(valueOf(letra.charAt(0)));
-
-        Ahorcado.verPalabras(palabraJuego, palabras);
+        jugadores.add(letra.charAt(0));
 
         return palabraJuego.contains(letra);
     }
-
-    private static boolean verPalabras(String palabraJuego, List<String> palabras) {
-        StringBuilder concatena = new StringBuilder();
+        
+    private static boolean verPalabras(String palabraJuego, List<Character> jugadores) {
+        String concatena = "";
         int correctas = 0;
 
         for (int i = 0; i < palabraJuego.length(); i++) {
-            if (palabras.contains(palabraJuego.charAt(i))) {
-                concatena.append(palabraJuego.charAt(i));
+            if (jugadores.contains(palabraJuego.charAt(i))) {
+                concatena = concatena + palabraJuego.charAt(i);
                 correctas++;
             } else {
-                concatena.append(" - ");
+                concatena = concatena + " - ";
             }
         }
-
-        System.out.println(concatena);
-
-        JOptionPane.showMessageDialog(null, concatena.toString());
-
-        Ahorcado.averiguar(palabraJuego, palabras);
-
+        JOptionPane.showConfirmDialog(null, concatena);
         return (palabraJuego.length() == correctas);
     }
-
-
 }
