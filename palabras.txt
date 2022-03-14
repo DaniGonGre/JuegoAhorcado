@@ -1,0 +1,10 @@
+fuego
+camion
+telefono
+paraguas
+mesa
+paralisis
+encefalo
+
+
+
