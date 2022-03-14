@@ -1,50 +1,176 @@
 package juegoahorcadoprueba;
 
+import java.util.*;
 import javax.swing.JOptionPane;
-import static juegoahorcadoprueba.Ahorcado.partida;
 
-public class JuegoAhorcadoPrueba {
+public class Ahorcado {
+  
+    public static void partida() {
 
-    public static void main(String[] args) {
+        List<String> palabras = new ArrayList<>();
+        Ficherolectura.crearPalabra(palabras);
+        int i = 0;
 
-        int op;
+        Random rand = new Random();
+        String palabraJuego = palabras.get(rand.nextInt(palabras.size()));
 
-        try {
+        System.out.println(palabraJuego);
 
-            op = Integer.parseInt(JOptionPane.showInputDialog("      "
-                    + "       **** MENU ****"
-                    + "\n1 --> Empezar partida" + "\n2 --> Elegir dificultad" + "\n3 --> Salir"));
-            switch (op) {
-                case 1:
-                    partida();
-                    break;
-                case 2:
-                    elegirDificultad();                    
+        List<Character> jugadores = new ArrayList<>();
+
+        System.out.println();
+
+        int intentos = 0;
+
+        while (true) {
+            if (intentos >= 7) {
+                JOptionPane.showMessageDialog(null, "Has acabado todos tus intentos.");
+                break;
             }
-            while (op != 3);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El valor ingresado no es un número.");
-        }        
+            
+            if(!jugando(palabraJuego, jugadores)){
+                intentos++;
+                JOptionPane.showMessageDialog(null, "Esta letra no está en la palabra. Te quedan " + (7-intentos) + " intentos");
+
+            }
+            
+            if(verPalabras(palabraJuego, jugadores)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+            }
+            
+            if (intentos >= 2){
+            String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
+            
+            
+            if(palabraJuego.equals(tmp)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "La palabra no es correcta.");
+              }
+            }
+            
+        }
+    }
+
+    private static boolean jugando(String palabraJuego, List<Character> jugadores) {
+
+        String letra = JOptionPane.showInputDialog("Introduce unha letra: ");
+        jugadores.add(letra.charAt(0));
+
+        return palabraJuego.contains(letra);
+    }
+        
+    private static boolean verPalabras(String palabraJuego, List<Character> jugadores) {
+        String concatena = "";
+        int correctas = 0;
+
+        for (int i = 0; i < palabraJuego.length(); i++) {
+            if (jugadores.contains(palabraJuego.charAt(i))) {
+                concatena = concatena + palabraJuego.charAt(i);
+                correctas++;
+            } else {
+                concatena = concatena + " - ";
+            }
+        }
+        JOptionPane.showMessageDialog(null, concatena);
+        return (palabraJuego.length() == correctas);
     }
     
-        public static void elegirDificultad(){
-            int op;
+     public static void partidaDificil() {
 
-        try {
+        List<String> palabras = new ArrayList<>();
+        Ficherolectura.crearPalabra(palabras);
+        int i = 0;
 
-            op = Integer.parseInt(JOptionPane.showInputDialog(" **** DIFICULTAD ****"
-                    + "\n1 --> Fácil. 7 intentos." + "\n2 --> Media. 5 intentos" + "\n3 --> Difícil. 3 intentos."));
-            switch (op) {
-                case 1:
-                    partida();
-                    break;
-                case 2:
+        Random rand = new Random();
+        String palabraJuego = palabras.get(rand.nextInt(palabras.size()));
+
+        System.out.println(palabraJuego);
+
+        List<Character> jugadores = new ArrayList<>();
+
+        System.out.println();
+
+        int intentos = 0;
+
+        while (true) {
+            if (intentos >= 3) {
+                JOptionPane.showMessageDialog(null, "Has acabado todos tus intentos.");
+                break;
             }
-            while (op != 2);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El valor ingresado no es un número.");
-            }    
-        }
+            
+            if(!jugando(palabraJuego, jugadores)){
+                intentos++;
+                JOptionPane.showMessageDialog(null, "Esta letra no está en la palabra. Te quedan " + (3-intentos) + " intentos");
 
+            }
+            
+            if(verPalabras(palabraJuego, jugadores)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+            }
+            
+            if (intentos >= 2){
+            String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
+            
+            
+            if(palabraJuego.equals(tmp)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "La palabra no es correcta.");
+              }
+            }
+            
+        }
+    }
+     
+      public static void partidaMedia() {
+
+        List<String> palabras = new ArrayList<>();
+        Ficherolectura.crearPalabra(palabras);
+        int i = 0;
+
+        Random rand = new Random();
+        String palabraJuego = palabras.get(rand.nextInt(palabras.size()));
+
+        System.out.println(palabraJuego);
+
+        List<Character> jugadores = new ArrayList<>();
+
+        System.out.println();
+
+        int intentos = 0;
+
+        while (true) {
+            if (intentos >= 5) {
+                JOptionPane.showMessageDialog(null, "Has acabado todos tus intentos.");
+                break;
+            }
+            
+            if(!jugando(palabraJuego, jugadores)){
+                intentos++;
+                JOptionPane.showMessageDialog(null, "Esta letra no está en la palabra. Te quedan " + (5-intentos) + " intentos");
+
+            }
+            
+            if(verPalabras(palabraJuego, jugadores)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+            }
+            
+            if (intentos >= 2){
+            String tmp = JOptionPane.showInputDialog("Introduce la palabra completa si la sabes: ");
+            
+            
+            if(palabraJuego.equals(tmp)){
+                JOptionPane.showMessageDialog(null, "Ganaste");
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "La palabra no es correcta.");
+              }
+            }
+            
+        }
+    }
 }
 
